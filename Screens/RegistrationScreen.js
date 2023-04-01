@@ -76,25 +76,28 @@ const styles = StyleSheet.create({
       borderColor: '#e8e8e8',
       borderWidth: 1,
       borderRadius: 8,
-      marginBottom: 16,
+    marginBottom: 16,
+      fontFamily: 'Roboto-Regular',
     },
     button: {
         backgroundColor: '#ff6c00',
         borderRadius: 100,
         marginHorizontal: 16,
         marginBottom: 16,
-        marginTop: 26,
+      marginTop: 26,
     },
     textButton: {
         padding: 16,
         color: '#fff',
         fontSize: 16,
         textAlign: 'center',
-        lineHeight: 19,
+      lineHeight: 19,
+        fontFamily: 'Roboto-Regular',
     },
     link: {
         fontSize: 16,
         color: '#1b4371',
-        textAlign: 'center',
+      textAlign: 'center',
+        fontFamily: 'Roboto-Regular',
     }
 });

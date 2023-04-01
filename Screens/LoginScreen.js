@@ -17,9 +17,11 @@ export const LoginScreen = () => {
     }
 
     return (
+        <TouchableWithoutFeedback onPress={keyboardHide}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
             <Text style={styles.title}>Войти</Text>
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            
                 <TextInput placeholder={'Адрес электронной почты'}
                     onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
                     value={state.email}
@@ -31,10 +33,12 @@ export const LoginScreen = () => {
                     value={state.password}
                     onFocus={() => setIsShowKeybord(true)}
                     style={styles.input}/>
-            </KeyboardAvoidingView>
+
             <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide} style={styles.button}><Text style={styles.textButton}>Войти</Text></TouchableOpacity>
-            <TouchableOpacity><Text style={styles.link}>Нет аккаунта? Зарегистрироваться</Text></TouchableOpacity>
-        </View>
+            <TouchableOpacity><Text style={{ ...styles.link, marginBottom: isShowKeyBord ? 16 : 144 }}>Нет аккаунта? Зарегистрироваться</Text></TouchableOpacity>
+            </View>
+            </KeyboardAvoidingView>
+            </TouchableWithoutFeedback>
     )
 };
 
@@ -44,6 +48,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
+        paddingHorizontal: 16,
   },
   title: {
     fontSize:30,
@@ -51,6 +56,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginTop: 32,
       marginBottom: 32,
+      fontFamily: 'Roboto-Medium',
     },
   input: {
     padding: 16,
@@ -58,7 +64,8 @@ const styles = StyleSheet.create({
       borderColor: '#e8e8e8',
       borderWidth: 1,
       borderRadius: 8,
-    margin: 16,
+      marginBottom: 16,
+    fontFamily: 'Roboto-Regular',
     },
     button: {
         backgroundColor: '#ff6c00',
@@ -73,11 +80,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         lineHeight: 19,
+        fontFamily: 'Roboto-Regular',
     },
     link: {
         fontSize: 16,
         color: '#1b4371',
         textAlign: 'center',
-        marginBottom: 144,
+        fontFamily: 'Roboto-Regular',
     }
 });

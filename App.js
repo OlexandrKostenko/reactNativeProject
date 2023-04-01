@@ -3,8 +3,8 @@ import { ImageBackground, Keyboard, StyleSheet, KeyboardAvoidingView, TouchableW
 import { LoginScreen } from './Screens/LoginScreen';
 import { RegistrationScreen } from './Screens/RegistrationScreen';
 import * as Font from 'expo-font';
-import { AppLoading }  from 'expo';
-import { useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect, useState } from 'react';
 
 const loadApplication = async () => {
   await Font.loadAsync({
@@ -15,20 +15,31 @@ const loadApplication = async () => {
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        SplashScreen.preventAutoHideAsync();
+        await loadApplication();
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        setIsReady(true);
+        SplashScreen.hideAsync();
+      }
+    }
+    prepare()
+  }, []);
   
     if (!isReady) {
-    return (<AppLoading
-      startAsync={loadApplication}
-      onFinish={() => setIsReady(true)}
-      onError={console.warn} />
-    );
+    return null
   };
 
   return (
       <View style={styles.container}>
         <ImageBackground source={require('./assets/PhotoBG.png')} style={styles.image}>
             <RegistrationScreen />
-         
+          {/* <LoginScreen /> */}
             <StatusBar style="auto" />
             
           </ImageBackground>
