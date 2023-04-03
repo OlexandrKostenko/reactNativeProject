@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { TextInput, View, Text, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
+import { TextInput, View, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
 
 const initialState = {
     email: '',
     password: ''
 };
-export const LoginScreen = () => {
+
+export const LoginScreen = ({navigation}) => {
     const [state, setState] = useState(initialState);
     const [isShowKeyBord, setIsShowKeybord] = useState(false);
 
@@ -18,6 +19,7 @@ export const LoginScreen = () => {
 
     return (
         <TouchableWithoutFeedback onPress={keyboardHide}>
+            <ImageBackground source={require('../assets/PhotoBG.png')} style={styles.image}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
             <Text style={styles.title}>Войти</Text>
@@ -35,20 +37,27 @@ export const LoginScreen = () => {
                     style={styles.input}/>
 
             <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide} style={styles.button}><Text style={styles.textButton}>Войти</Text></TouchableOpacity>
-            <TouchableOpacity><Text style={{ ...styles.link, marginBottom: isShowKeyBord ? 16 : 144 }}>Нет аккаунта? Зарегистрироваться</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Register')}><Text style={{ ...styles.link, marginBottom: isShowKeyBord ? 16 : 144 }}>Нет аккаунта? Зарегистрироваться</Text></TouchableOpacity>
             </View>
             </KeyboardAvoidingView>
+            </ImageBackground>
             </TouchableWithoutFeedback>
     )
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-        width: '100%',
+    container: {
+        backgroundColor: '#fff',
+        minWidth: '100%',
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         paddingHorizontal: 16,
+    },
+    image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: "flex-end",
+    alignItems: 'center',
   },
   title: {
     fontSize:30,

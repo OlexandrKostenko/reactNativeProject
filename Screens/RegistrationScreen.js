@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextInput, View, Text, StyleSheet, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
+import { TextInput, View, Text, StyleSheet, ImageBackground, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
 
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
 
 
 
-export const RegistrationScreen = () => {
+export const RegistrationScreen = ({navigation}) => {
     const [state, setState] = useState(initialState);
     const [isShowKeyBord, setIsShowKeybord] = useState(false);
 
@@ -23,7 +23,8 @@ export const RegistrationScreen = () => {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={keyboardHide}>
+      <TouchableWithoutFeedback onPress={keyboardHide}>
+        <ImageBackground source={require('../assets/PhotoBG.png')} style={styles.image}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
             <Text style={styles.title}>Регистрация</Text>
@@ -46,10 +47,11 @@ export const RegistrationScreen = () => {
                     onFocus={() => setIsShowKeybord(true)} />
             
             <TouchableOpacity style={styles.button} activeOpacity={0.5} onPress={keyboardHide}><Text style={styles.textButton}>Зарегистрироваться</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={{ ...styles.link, marginBottom: isShowKeyBord ? 16 : 78 }}>Уже есть аккаунт? Войти</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}><Text style={{ ...styles.link, marginBottom: isShowKeyBord ? 16 : 78 }}>Уже есть аккаунт? Войти</Text></TouchableOpacity>
                 
             </View>
-            </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+          </ImageBackground>
             </TouchableWithoutFeedback>
     )
 };
@@ -61,6 +63,12 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         paddingHorizontal: 16,
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: "flex-end",
+    alignItems: 'center',
   },
   title: {
     fontSize:30,
