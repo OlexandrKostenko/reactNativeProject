@@ -1,17 +1,11 @@
-import { LoginScreen } from './Screens/LoginScreen';
-import { RegistrationScreen } from './Screens/RegistrationScreen';
-
-import { Home } from './Screens/Home';
-import { CommentsScreen } from './Screens/CommentsScreen';
-
-import { MapScreen } from './Screens/MapScreen';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthProvider, useAuth } from './AuthContext';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useRoute } from './router';
 
 const loadApplication = async () => {
   await Font.loadAsync({
@@ -20,25 +14,14 @@ const loadApplication = async () => {
   })
 }
 
-const AuthStack = createNativeStackNavigator();
-const HomeStack = createNativeStackNavigator();
+
 const MainTab = createBottomTabNavigator();
 
-const useRoute = (isAuth) => {
-  if (!isAuth) {
-    return <AuthStack.Navigator>
-            <AuthStack.Screen options={{headerShown: false}} name='Register' component={RegistrationScreen} />
-            <AuthStack.Screen options={{ headerShown: false }} name='Login' component={LoginScreen} />
-      </AuthStack.Navigator>
-  }
-  return <HomeStack.Navigator>
-    <HomeStack.Screen name='Home' component={Home} />
-  </HomeStack.Navigator>
-}
-
-export default function App() {
+export default function App () {
   const [isReady, setIsReady] = useState(false);
-  const routing = useRoute(true);
+  const { isAuth } = useAuth;
+  
+  
 
   useEffect(() => {
     async function prepare() {
@@ -59,10 +42,14 @@ export default function App() {
     return null
   };
 
+  
+
   return (
+    <AuthProvider>
     <NavigationContainer>
-          {routing}
-    </NavigationContainer>
+          {useRoute(isAuth)}
+      </NavigationContainer>
+      </AuthProvider>
   );
 }
 

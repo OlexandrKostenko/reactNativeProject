@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../AuthContext";
 import { TextInput, View, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
 
 const initialState = {
@@ -10,11 +11,14 @@ export const LoginScreen = ({navigation}) => {
     const [state, setState] = useState(initialState);
     const [isShowKeyBord, setIsShowKeybord] = useState(false);
 
+    const { setIsAuth } = useAuth();
+
     const keyboardHide = () => {
         console.log(state);
         setIsShowKeybord(false);
         Keyboard.dismiss();
         setState(initialState);
+        setIsAuth(true);
     }
 
     return (

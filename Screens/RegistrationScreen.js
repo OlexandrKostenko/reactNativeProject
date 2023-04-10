@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../AuthContext";
 import { TextInput, View, Text, StyleSheet, ImageBackground, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
 
 
@@ -12,14 +13,18 @@ const initialState = {
 
 export const RegistrationScreen = ({navigation}) => {
     const [state, setState] = useState(initialState);
-    const [isShowKeyBord, setIsShowKeybord] = useState(false);
-
+  const [isShowKeyBord, setIsShowKeybord] = useState(false);
+  
+  const { isAuth, logIn } = useAuth();
 
     const keyboardHide = () => {
         console.log(state);
         setIsShowKeybord(false);
         Keyboard.dismiss();
-        setState(initialState);
+      setState(initialState);
+      console.log(isAuth);
+      logIn();
+      console.log(isAuth);
     }
 
     return (
@@ -46,7 +51,7 @@ export const RegistrationScreen = ({navigation}) => {
                     style={styles.input}
                     onFocus={() => setIsShowKeybord(true)} />
             
-            <TouchableOpacity style={styles.button} activeOpacity={0.5} onPress={keyboardHide}><Text style={styles.textButton}>Зарегистрироваться</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.button} activeOpacity={0.5} onPress={keyboardHide}><Text style={styles.textButton}>Зарегистрироваться</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}><Text style={{ ...styles.link, marginBottom: isShowKeyBord ? 16 : 78 }}>Уже есть аккаунт? Войти</Text></TouchableOpacity>
                 
             </View>
